@@ -6,7 +6,7 @@ The website and developer documentation for [Valence](https://github.com/Bishal-
 - **Developer docs:** `/docs/`, built with [Starlight](https://starlight.astro.build/). Source: `src/content/docs/docs/`.
 - **For machines:** `sitemap-index.xml`, `robots.txt`, `llms.txt`, `llms-full.txt`, JSON-LD (`SoftwareApplication`, `FAQPage`, `TechArticle`), and a generated 1200×630 share image for every page.
 
-Astro 7, Starlight, no CSS framework. Node 22.13 or later.
+Astro 7, Starlight, no CSS framework. Node 22.22 or later (`.node-version` pins 24 for builds; Astro 7 refuses older Node).
 
 ## Commands
 

@@ -10,7 +10,7 @@
     "check": "node scripts/check-seo.mjs"
   },
   "engines": {
-    "node": ">=22.13"
+    "node": ">=22.22"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
