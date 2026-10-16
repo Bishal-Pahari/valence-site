@@ -1,0 +1,34 @@
+---
+// Starlight's site title, plus the "Beta" tag under the name so the docs header matches the home page.
+import { logos } from 'virtual:starlight/user-images';
+import config from 'virtual:starlight/user-config';
+
+const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+---
+
+<a href={siteTitleHref} class="site-title sl-flex">
+  {config.logo && logos.dark && <img alt="" aria-hidden="true" src={logos.dark.src} width={logos.dark.width} height={logos.dark.height} />}
+  <span class="name" translate="no">
+    {siteTitle}
+    <small>Beta</small>
+  </span>
+</a>
+
+<style>
+  .site-title {
+    align-items: center;
+    gap: var(--sl-nav-gap);
+    font-size: var(--sl-text-h4);
+    font-weight: 600;
+    color: var(--sl-color-text-accent);
+    text-decoration: none;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  img {
+    height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
+    width: auto;
+  }
+  .name { display: grid; line-height: 1; }
+  small { font: 600 0.6875rem/1 var(--sl-font-mono); letter-spacing: 0.04em; color: var(--sl-color-gray-3); margin-top: 0.25rem; }
+</style>

@@ -21,7 +21,7 @@ export default defineConfig({
       disable404Route: true,
       customCss: ['./src/styles/docs.css'],
       routeMiddleware: './src/route-middleware.ts',
-      components: { Footer: './src/components/DocsFooter.astro' },
+      components: { Footer: './src/components/DocsFooter.astro', SiteTitle: './src/components/DocsSiteTitle.astro' },
       head: [
         { tag: 'link', attrs: { rel: 'icon', href: '/favicon.ico', sizes: '32x32' } },
         { tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' } },
