@@ -6,12 +6,15 @@ const font = (name: string) => join(process.cwd(), 'src', 'fonts', name);
 
 export const OG_FONTS = [font('gs-bold.ttf'), font('gs-medium.ttf'), font('rm-medium.ttf')];
 export const OG_LOGO = join(process.cwd(), 'src', 'assets', 'logo-og.png');
+// brand/valence-social-banner.png flattened onto its own background (#F9F8FA): artwork on the right, the left side empty for text.
+export const OG_BANNER = join(process.cwd(), 'src', 'assets', 'og-banner.png');
+export const OG_BG: [number, number, number] = [249, 248, 250];
 
 /** Marketing pages that need a share image. Docs pages come from the content collection. */
 export const MARKETING_OG = {
   home: {
     title: 'Keep the core.\nSwap the shell.',
-    description: 'Your web app becomes your mobile app’s interface: a small Flutter core that ships once, signed UI releases that roll back on their own, and offline-first SQLite.',
+    description: 'Your web app becomes your mobile app’s interface: a small Flutter host that ships once, signed UI releases that roll back on their own, and offline-first SQLite.',
   },
   privacy: {
     title: 'Privacy policy',

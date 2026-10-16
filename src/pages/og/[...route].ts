@@ -1,7 +1,7 @@
 import { getCollection } from 'astro:content';
 import { OGImageRoute } from 'astro-og-canvas';
 
-import { MARKETING_OG, OG_FONTS, OG_LOGO } from '../../og';
+import { OG_BG, OG_LOGO, OG_FONTS, OG_BANNER, MARKETING_OG } from '../../og';
 
 const docs = await getCollection('docs');
 
@@ -16,13 +16,16 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   getImageOptions: (_path, page) => ({
     title: page.title,
     description: page.description,
-    bgGradient: [[250, 250, 251]],
-    border: { color: [47, 107, 176], width: 24, side: 'inline-start' },
-    padding: 72,
-    logo: { path: OG_LOGO, size: [84] },
+    bgGradient: [OG_BG],
+    bgImage: { path: OG_BANNER, fit: 'cover' },
+    // The banner is drawn over the border, so this border is invisible. It only reserves the right side
+    // for the artwork: text wraps before x ≈ 640 instead of running over the crab.
+    border: { color: OG_BG, width: 430, side: 'inline-end' },
+    padding: 64,
+    logo: { path: OG_LOGO, size: [72] },
     font: {
-      title: { families: ['Google Sans'], weight: 'Bold', size: 70, lineHeight: 1.12, color: [16, 18, 21] },
-      description: { families: ['Google Sans'], weight: 'Medium', size: 32, lineHeight: 1.35, color: [103, 107, 114] },
+      title: { families: ['Google Sans'], weight: 'Bold', size: 58, lineHeight: 1.12, color: [16, 18, 21] },
+      description: { families: ['Google Sans'], weight: 'Medium', size: 26, lineHeight: 1.4, color: [103, 107, 114] },
     },
     fonts: OG_FONTS,
   }),
