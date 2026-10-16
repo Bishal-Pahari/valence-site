@@ -18,7 +18,7 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag('js', new Date());
-    window.gtag('config', id, { anonymize_ip: true });
+    window.gtag('config', id);
     const s = document.createElement('script');
     s.async = true;
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
@@ -59,9 +59,7 @@
         .consent a { color: inherit; text-underline-offset: 3px; }
         .consent .row { display: flex; flex-wrap: wrap; gap: 8px; }
         .consent button { min-height: 40px; padding: 0 16px; border-radius: 8px; font: 500 15px/1 inherit; cursor: pointer;
-          border: 1px solid var(--line-strong, #d3d5d9); background: transparent; color: inherit; }
-        .consent button[data-yes] { background: var(--ink, #101215); color: var(--on-ink, #fff); border-color: var(--ink, #101215); }
-        .consent button:focus-visible { outline: 2px solid var(--accent, #2f6bb0); outline-offset: 2px; }`;
+          border: 1px solid var(--line-strong, #d3d5d9); background: transparent; color: inherit; }        .consent button:focus-visible { outline: 2px solid var(--accent, #2f6bb0); outline-offset: 2px; }`;
       document.head.append(st);
     }
     banner = document.createElement('div');
@@ -75,7 +73,6 @@
     banner.querySelector('[data-yes]').addEventListener('click', () => choose('granted'));
     banner.querySelector('[data-no]').addEventListener('click', () => choose('denied'));
     document.body.append(banner);
-    banner.querySelector('[data-yes]').focus({ preventScroll: true });
   }
 
   const start = () => {

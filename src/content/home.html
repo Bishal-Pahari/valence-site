@@ -3,11 +3,11 @@
       <div class="hero-copy">
         <div class="hero-tags">
           <span class="tag accent">Open source, MIT</span>
-          <span class="tag">v0.3</span>
+          <span class="tag">v0.3 Beta</span>
           <span class="tag">Flutter host + any static web build</span>
         </div>
         <h1>Keep the core. Swap the shell.</h1>
-        <p class="lede">Your web app becomes your mobile app’s interface. A small Flutter core ships through the stores once. Every UI release after that is signed, tried on each phone, and rolled back on its own if it fails to start. Data lives in native SQLite, so the app works offline from the first launch.</p>
+        <p class="lede">Your web app becomes your mobile app’s interface. A small Flutter host ships through the stores once. Every UI release after that is signed, tried on each phone and rolled back on its own if it fails to start. Data lives in native SQLite, so the app works offline from the first launch.</p>
         <div class="hero-actions">
           <div class="cmd"><span class="prompt">$</span><code>npm create valence@latest</code><button class="copy" type="button" data-copy="npm create valence@latest" aria-label="Copy command"><svg class="ico" style="width:17px;height:17px" aria-hidden="true"><use href="#i-copy"/></svg></button></div>
           <a class="link" href="/docs/">Read the docs</a>
@@ -309,8 +309,8 @@ Future&lt;String&gt; bridgeDispatch(BridgeHandlers h, String raw, {<span class="
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="eyebrow">Store policy</span>
-        <h2>Allowed by both stores, within limits the tooling checks.</h2>
-        <p class="lede">Downloading JavaScript that runs in a WebView is permitted on iOS and Android. Valence checks the conditions on every release, so you find out before a reviewer does.</p>
+        <h2>Allowed by both stores, within limits.</h2>
+        <p class="lede">Downloading JavaScript into a WebView is permitted on iOS and Android if it keeps the app’s purpose. Apple also bars downloaded code that adds features (Guideline 2.5.2), so new features ship with a store build. Valence checks the parts a machine can check. App review has the final say.</p>
       </div>
       <div class="quotes">
         <figure class="quote reveal" style="--i:0;margin:0">
@@ -319,7 +319,7 @@ Future&lt;String&gt; bridgeDispatch(BridgeHandlers h, String raw, {<span class="
         </figure>
         <figure class="quote reveal" style="--i:1;margin:0">
           <figcaption class="cite">Google Play, Device and Network Abuse policy</figcaption>
-          <blockquote>“This restriction does not apply to code that runs in a virtual machine or an interpreter where either provides indirect access to Android APIs (such as JavaScript in a webview or browser).”</blockquote>
+          <blockquote>“An app distributed via Google Play may not modify, replace, or update itself using any method other than Google Play’s update mechanism. … This restriction does not apply to code that runs in a virtual machine or an interpreter where either provides indirect access to Android APIs (such as JavaScript in a webview or browser).”</blockquote>
         </figure>
       </div>
       <div class="rules">
@@ -349,7 +349,7 @@ Future&lt;String&gt; bridgeDispatch(BridgeHandlers h, String raw, {<span class="
           <div><h3>A CDN can’t push code</h3><p>Every manifest is signed and every file is checked against its hash. Someone who controls the CDN can freeze phones on their current bundle, but can’t serve new code.</p></div>
         </div>
       </div>
-      <p class="muted reveal" style="font-size:14.5px;margin-top:20px">Policy text retrieved 2026-10-14. The exact quotes and the rules built on them are in the <a class="link" href="/docs/guides/store-policy/">store policy guide</a>.</p>
+      <p class="muted reveal" style="font-size:14.5px;margin-top:20px">Policy text retrieved 2026-10-14 and 2026-10-16. Not legal advice. The exact quotes and the rules built on them are in the <a class="link" href="/docs/guides/store-policy/">store policy guide</a>.</p>
     </div>
   </section>
 
@@ -382,7 +382,7 @@ Future&lt;String&gt; bridgeDispatch(BridgeHandlers h, String raw, {<span class="
             <li><span class="n">02</span><span><b>Writes</b> <code>valence.config.json</code>, the bridge schema and the web bridge client.</span></li>
             <li><span class="n">03</span><span><b>Generates</b> your Ed25519 signing key outside the repo, and the typed bridge code.</span></li>
             <li><span class="n">04</span><span><b>Installs</b> the <code>/valence</code> skill and its agents into <code>.claude/</code>.</span></li>
-            <li><span class="n">05</span><span><b>Offers to launch</b> <code>/valence init</code>, which builds the Flutter host, wires your web app, runs the tests and gets an independent review.</span></li>
+            <li><span class="n">05</span><span><b>Offers to launch</b> <code>/valence init</code>, which builds the Flutter host, wires your web app, runs the tests and has a separate reviewer agent check the result.</span></li>
           </ol>
           <div class="skill">
             <div><code>/valence init</code><span>Scaffold the host, keys, bridge, offline store and tests.</span></div>
@@ -401,13 +401,13 @@ Future&lt;String&gt; bridgeDispatch(BridgeHandlers h, String raw, {<span class="
         <h2>Before you ship it.</h2>
       </div>
       <dl style="margin:0">
-        <div class="qa reveal"><dt>Will Apple or Google reject an app built this way?</dt><dd>Both stores allow JavaScript running in a WebView to be downloaded, as long as it doesn’t change the app’s advertised purpose, bypass OS security or create a storefront. The common rejections are covered: the host must add real native value, new top-level routes are flagged for a store release, and the bridge is locked to the app’s own pages.</dd></div>
+        <div class="qa reveal"><dt>Will Apple or Google reject an app built this way?</dt><dd>Both stores allow JavaScript running in a WebView to be downloaded, as long as it doesn’t change the app’s advertised purpose, bypass OS security or create a storefront, and Apple expects new features to go through review. Valence guards against the common rejections: the host must add real native value, new top-level routes are flagged for a store release and the bridge is locked to the app’s own pages. Reviewers judge each app, so no tool can promise approval.</dd></div>
         <div class="qa reveal"><dt>What happens to users when a release is broken?</dt><dd>Each phone tries a new bundle as a trial on the next launch. If the page doesn’t call <code>ready()</code> within 15 seconds of foreground time, or the app dies first, the phone goes back to the last good version. After a second failure the bundle is marked bad on that phone. Start with a 10% rollout and most users never see it.</dd></div>
-        <div class="qa reveal"><dt>Can a compromised CDN push code to my users?</dt><dd>No. Every manifest is signed, and every file is checked against its hash and size. The pointer is unsigned so you can change the rollout without re-signing; someone who controls it can freeze phones on their current bundle or change who is in the rollout, and nothing more.</dd></div>
+        <div class="qa reveal"><dt>Can a compromised CDN push code to my users?</dt><dd>No, as long as your signing key stays private. Every manifest is signed, and every file is checked against its hash and size. The pointer is unsigned so you can change the rollout without re-signing; someone who controls it can freeze phones on their current bundle or change who is in the rollout, and nothing more.</dd></div>
         <div class="qa reveal"><dt>Which web frameworks work?</dt><dd>Any SPA that builds to static files. The wizard detects SvelteKit, Next.js static export, Astro and Vite. When <code>window.Valence</code> is absent, bridge calls go to a web shim, so the same build is also your website.</dd></div>
         <div class="qa reveal"><dt>Do I need Claude Code?</dt><dd>No. The CLI is zero-dependency Node and the wizard vendors it into your repo, so CI needs no install. Claude Code adds the <code>/valence</code> workflows that generate the Flutter host against the spec and review it.</dd></div>
         <div class="qa reveal"><dt>What is out of scope?</dt><dd>Third-party mini-app stores (Apple guideline 4.7), CRDTs and real-time collaboration, and downloading native code.</dd></div>
-        <div class="qa reveal"><dt>How mature is it?</dt><dd>Version 0.3, skill-first. The CLI, the spec, codegen and the TypeScript client are tested. The Flutter runtime is generated per app against the spec and its test matrix. Once a reference app has proven it, the runtime moves into a <code>valence</code> pub package and an <code>@valence/bridge</code> npm package.</dd></div>
+        <div class="qa reveal"><dt>How mature is it?</dt><dd>It is in beta: version 0.3, skill-first, and the spec and commands may still change before 1.0. The CLI, the spec, codegen and the TypeScript client are tested. The Flutter runtime is generated per app against the spec and its test matrix. Once a reference app has proven it, the runtime moves into a <code>valence</code> pub package and an <code>@valence/bridge</code> npm package.</dd></div>
       </dl>
     </div>
   </section>

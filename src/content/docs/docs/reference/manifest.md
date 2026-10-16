@@ -26,7 +26,7 @@ Upload order: **files, then manifests, then the pointer last.**
 
 The pointer is unsigned, so the rollout can change without re-signing. Hosts decode it strictly: `seq` must be an integer of at least 1 and `rollout` an integer from 0 to 100. Anything else means "no update".
 
-An attacker who controls the CDN can freeze phones on their current bundle, by never advancing the pointer, and can change who is in the rollout. They cannot serve unsigned code, change any signed field, push a phone below its floor, or serve a manifest under a different `seq`.
+An attacker who controls the CDN can freeze phones on their current bundle, by never advancing the pointer, and can change who is in the rollout. They cannot serve unsigned code, change any signed field, push a phone below its floor or serve a manifest under a different `seq`.
 
 ## The manifest
 

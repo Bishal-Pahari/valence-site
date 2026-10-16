@@ -1,12 +1,14 @@
-// Runs for every docs page: adds the share image and article structured data to the page's <head>.
+// Runs for every docs page: adds the beta banner, the share image and article structured data.
 import { defineRouteMiddleware } from '@astrojs/starlight/route-data';
 
-import { AUTHOR, SITE_NAME, SITE_URL } from './site.config.mjs';
+import { AUTHOR, BETA_BANNER, SITE_NAME, SITE_URL } from './site.config.mjs';
 import { ogPath } from './og';
 
 export const onRequest = defineRouteMiddleware((context) => {
   const route = context.locals.starlightRoute;
   const { title, description } = route.entry.data;
+  // A page's own banner (frontmatter) wins; the beta page itself doesn't need one.
+  if (!route.entry.data.banner && route.entry.id !== 'docs/getting-started/beta') route.entry.data.banner = { content: BETA_BANNER };
   const image = `${SITE_URL}${ogPath(route.entry.id)}`;
   const url = new URL(context.url.pathname, SITE_URL).href;
 

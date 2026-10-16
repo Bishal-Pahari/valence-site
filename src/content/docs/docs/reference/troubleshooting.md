@@ -86,6 +86,6 @@ Work down the list. Each step is a reason the phone may rightly stay put:
 
 ## A bundle never commits
 
-The page must call `ready()` after its first meaningful paint, from the page that is serving the trial. If it does not arrive within 15 seconds of foreground time, the phone counts a failure. Check that `connect()` and `ready()` run in the root layout, that no startup code throws, and that `ready()` is not blocked behind a network request.
+The page must call `ready()` after its first meaningful paint, from the page that is serving the trial. If it does not arrive within 15 seconds of foreground time, the phone counts a failure. Check that `connect()` and `ready()` run in the root layout, that no startup code throws and that `ready()` is not blocked behind a network request.
 
 Still stuck? Open an issue in the [Valence repository](https://github.com/Bishal-Pahari/valence/issues).

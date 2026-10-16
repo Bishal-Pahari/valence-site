@@ -1,13 +1,13 @@
 ---
-import { AUTHOR, GA_ID, REPO } from '../site.config.mjs';
+import { AUTHOR, GA_ID, ISSUES, REPO } from '../site.config.mjs';
 ---
 
 <footer>
   <div class="wrap">
-    <span>Valence · MIT © 2026 {AUTHOR}</span>
+    <span>Valence · beta · MIT © 2026 {AUTHOR}</span>
     <nav aria-label="Footer">
-      <a href="/docs/">Docs</a> · <a href="/docs/getting-started/quick-start/">Quick start</a> · <a href="/privacy/">Privacy</a> ·{' '}
-      <a href={REPO}>GitHub</a>
+      <a href="/docs/">Docs</a> · <a href="/docs/getting-started/quick-start/">Quick start</a> · <a href="/docs/getting-started/beta/">Beta status</a> ·{' '}
+      <a href={ISSUES}>Report a problem</a> · <a href="/privacy/">Privacy</a> · <a href={REPO}>GitHub</a>
       {GA_ID && <Fragment> · <button type="button" class="linklike" data-consent-open>Cookie settings</button></Fragment>}
     </nav>
   </div>

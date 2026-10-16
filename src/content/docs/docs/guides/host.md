@@ -8,7 +8,7 @@ sidebar:
 The host is the native half of a Valence app. `/valence init` generates it from the spec, and it goes through store review. It rarely changes, because everything the user sees lives in the web bundle.
 
 :::note
-Valence is at version 0.3 and is skill-first: the Flutter runtime is written into your app against the spec and its test matrix. The plan is to extract it into a `valence` pub package once a first production app has proven it.
+Valence is in beta at version 0.3 and is skill-first: the Flutter runtime is written into your app against the spec and its test matrix. The plan is to extract it into a `valence` pub package once a first production app has proven it.
 :::
 
 ## What the host does
@@ -20,7 +20,7 @@ Valence is at version 0.3 and is skill-first: the Flutter runtime is written int
 | `store.dart` | SQLite: `kv`, `bucket`, `outbox` and `prefs`, with the seed import |
 | `sync.dart` | Incremental pull, local-first push, and the sync lease |
 | `bridge.dart` | Implements the generated `BridgeHandlers` and passes the server's nonce to `bridgeDispatch` |
-| `host.dart` | The WebView widget, the navigation lock, and the foreground-only ready timer |
+| `host.dart` | The WebView widget, the navigation lock and the foreground-only ready timer |
 | `bridge.g.dart`, `config.g.dart` | Generated. Never edited. |
 
 The host depends on `webview_flutter`, `sqflite`, `path_provider`, `cryptography`, `http`, `url_launcher`, `connectivity_plus` and `workmanager`.

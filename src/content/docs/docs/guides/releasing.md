@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-There are two kinds of release. A **store release** ships the host and the built-in bundle. An **OTA release** ships only a new web bundle, with no store review. Most releases are OTA.
+There are two kinds of release. A **store release** ships the host and the built-in bundle. An **OTA release** ships only a new web bundle: fixes, content and changes to features the reviewed build already has. New features go out with a store release. Most releases are OTA.
 
 ## Keys
 
@@ -24,7 +24,7 @@ node valence/valence.mjs keygen
 
 ## Store release
 
-For a submission to the stores (the first release, a new native capability, or a new feature area), build the built-in bundle with `--store`:
+For a submission to the stores (the first release, a new native capability or a new feature area), build the built-in bundle with `--store`:
 
 ```sh
 node valence/valence.mjs bundle --store
@@ -92,7 +92,7 @@ Files are content-addressed, so uploading an unchanged file again is harmless. `
 
 ## What phones do with it
 
-Each phone checks the pointer on UI start, on resume and every 30 minutes in the foreground. A phone joins the rollout when `fnv1a32(installId + ":" + seq) % 100` is below the pointer's `rollout`. The install id is a random UUID created on first launch, never a device id. The new bundle becomes pending, runs as a trial on the next launch, and commits when the page calls `ready()`. See the [update protocol](/docs/reference/update-protocol/).
+Each phone checks the pointer on UI start, on resume and every 30 minutes in the foreground. A phone joins the rollout when `fnv1a32(installId + ":" + seq) % 100` is below the pointer's `rollout`. The install id is a random UUID created on first launch, never a device id. The new bundle becomes pending, runs as a trial on the next launch and commits when the page calls `ready()`. See the [update protocol](/docs/reference/update-protocol/).
 
 ## Roll back
 
@@ -106,7 +106,7 @@ Pointing the channel at an older `seq` only cancels downloads that are pending. 
 
 ## What the pointer can and cannot do
 
-The pointer is unsigned, so the rollout can change without re-signing. If your CDN is compromised, an attacker can freeze phones on their current bundle or change who is in the rollout. They cannot serve unsigned code, change any signed field, push a phone below its floor, or serve a manifest under a different `seq`.
+The pointer is unsigned, so the rollout can change without re-signing. If your CDN is compromised, an attacker can freeze phones on their current bundle or change who is in the rollout. They cannot serve unsigned code, change any signed field, push a phone below its floor or serve a manifest under a different `seq`.
 
 ## Next
 

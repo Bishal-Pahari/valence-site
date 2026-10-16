@@ -1,6 +1,6 @@
 ---
 title: Data and sync guide
-description: How Valence keeps data in native SQLite, seeds it from the app, pulls changes by sequence number, and pushes local edits with an outbox.
+description: How Valence keeps data in native SQLite, seeds it from the app, pulls changes by sequence number and pushes local edits with an outbox.
 sidebar:
   order: 4
 ---

@@ -1,12 +1,13 @@
 ---
 import Default from '@astrojs/starlight/components/Footer.astro';
 
-import { GA_ID } from '../site.config.mjs';
+import { GA_ID, ISSUES } from '../site.config.mjs';
 ---
 
 <Default {...Astro.props}><slot /></Default>
 <nav class="site-links" aria-label="Site">
   <a href="/">Home</a>
+  <a href={ISSUES}>Report a problem</a>
   <a href="/privacy/">Privacy</a>
   {GA_ID && <button type="button" data-consent-open>Cookie settings</button>}
 </nav>

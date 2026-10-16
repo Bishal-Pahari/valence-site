@@ -28,7 +28,7 @@ The wizard sets up everything that does not need AI, in a few seconds:
 2. **Writes** `valence/valence.config.json`, the bridge schema and the web bridge client. It also adds `.gitattributes` and `.gitignore` entries.
 3. **Generates** an Ed25519 signing key **outside the repo**, and the typed bridge code for Dart and TypeScript.
 4. **Installs** the `/valence` Claude Code skill and its agents into `.claude/`, or into `~/.claude/` with `--global`.
-5. **Offers to launch** `claude "/valence init"`, which builds the Flutter host, wires your web app, runs the tests and gets an independent review.
+5. **Offers to launch** `claude "/valence init"`, which builds the Flutter host, wires your web app, runs the tests and has a separate reviewer agent check the result.
 
 It is safe to run again. It never overwrites your config, your schema or files you have edited. Pass `--yes` to accept the detected defaults without prompts, for example in CI.
 
@@ -55,7 +55,7 @@ If you use Claude Code, run:
 claude "/valence init"
 ```
 
-`/valence init` uses three kinds of agents: a docs scout that checks the current Flutter and store documentation, two builders working in parallel on the Flutter host and the web side, and an independent reviewer that checks the result. It finishes by writing an `AGENTS.md` section so every later contributor follows the same rules.
+`/valence init` uses three kinds of agents: a docs scout that checks the current Flutter and store documentation, two builders working in parallel on the Flutter host and the web side, and a separate reviewer agent that checks the result. It finishes by writing an `AGENTS.md` section so every later contributor follows the same rules.
 
 Without Claude Code, the spec is the contract. The [Flutter host guide](/docs/guides/host/) lists what the host has to do, and the [bundle format](/docs/reference/manifest/) and [update protocol](/docs/reference/update-protocol/) pages define the behaviour precisely.
 

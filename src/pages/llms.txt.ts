@@ -16,7 +16,7 @@ export const GET: APIRoute = async () => {
     '',
     `> ${DESCRIPTION}`,
     '',
-    'Valence runs a web app inside a Flutter shell. UI changes ship as signed bundles that phones verify, trial and roll back on their own; data lives in native SQLite and syncs by sequence number. Open source, MIT.',
+    'Valence runs a web app inside a small Flutter host. UI changes ship as signed bundles that phones verify, trial and roll back on their own; data lives in native SQLite and syncs by sequence number. Open source, MIT, in beta (v0.3).',
     '',
     '## Getting started',
     ...section('docs/getting-started/'),

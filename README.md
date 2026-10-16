@@ -37,7 +37,7 @@ Things that need an account, a domain or a host, so they cannot be done from the
 2. **Google Analytics (optional).** Create a GA4 property, set `PUBLIC_GA_ID`, deploy, accept the banner, and confirm your visit under Reports → Realtime. Analytics only loads after consent, so a visit where you decline will not appear.
 3. **Search Console.** Add the site as a property, verify ownership (DNS record or the HTML meta tag), then submit `https://<your domain>/sitemap-index.xml` under Sitemaps.
 4. **Check a share image** by pasting a page URL into a link-preview tool after deploying.
-5. **Fill in the privacy policy.** `src/pages/privacy.astro` names who is responsible and links the issue tracker for questions. Add a contact address if you want one, and have it reviewed for your jurisdiction.
+5. **Fill in the privacy policy.** Set `CONTACT_EMAIL` in `src/site.config.mjs` (until then the page points to the issue tracker). Add the host's name and how long it keeps server logs to `src/pages/privacy.astro`. If you turn on analytics, leave GA4 data retention at 2 months (Admin → Data collection → Data retention), because the policy says so. Then have it reviewed for your jurisdiction.
 
 ## Where things are
 
@@ -50,6 +50,7 @@ src/styles/               base.css (shared tokens), home.css, docs.css (Starligh
 src/scripts/home.js       the release console
 public/consent.js         analytics consent banner (does nothing without a GA ID)
 public/assets/            logo, mascot poses, phone frame
+public/fonts/             self-hosted web fonts and fonts.css
 src/fonts/                TTFs used only to draw share images
 brand/                    original logo and mascot sheets
 scripts/check-seo.mjs     the build-time SEO check
@@ -61,10 +62,10 @@ The docs restate the Valence spec (`contracts.md` in the code repo) in a friendl
 
 ## Notes
 
-- **Fonts:** Google Sans and Reddit Mono load from Google Fonts in the browser. The TTFs in `src/fonts/` are only used to render share images at build time. Check each family's licence on fonts.google.com before redistributing the files.
+- **Fonts:** Google Sans and Reddit Mono are self-hosted from `public/fonts/` (the latin, latin-ext and symbols subsets, downloaded from Google Fonts), so visitors never contact Google. The TTFs in `src/fonts/` are only used to render share images at build time. Both families are under the SIL Open Font License; `OFL.txt` sits next to the files.
 - **`npm audit`** reports moderate advisories in build-time dependencies of Starlight (PostCSS selector parsing). They matter when parsing untrusted CSS, which this site does not do. Its suggested fix is a downgrade, so it is not applied; update Starlight when a release addresses them.
 - **Images on the home page** are plain `<img>` tags in `home.html` with explicit sizes and alt text. The mascot files are already small WebP.
 
 ## License
 
-MIT, see `LICENSE`. The Valence name, logo and mascot are part of the Valence project.
+MIT, see `LICENSE`. It covers the code and the docs. It does not grant any right to the Valence name, logo or mascot (`brand/`, `public/assets/`): those are © 2026 Bishal Pahari, all rights reserved. The fonts are under the SIL Open Font License, see `src/fonts/OFL.txt`.

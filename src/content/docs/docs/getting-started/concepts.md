@@ -41,7 +41,7 @@ The bundle built into the app is always the final fallback. Details are in the [
 
 ## What keeps it safe
 
-- **Signatures.** Every manifest is signed with Ed25519, and the public key is compiled into the host. A compromised CDN cannot serve code the phone will accept.
+- **Signatures.** Every manifest is signed with Ed25519, and the public key is compiled into the host. While the signing key stays private, a compromised CDN cannot serve code the phone will accept.
 - **Hashes.** Every file is checked against the hash and size in the signed manifest.
 - **A fixed check order.** Signature, `appId`, `seq`, floor, `requires`, path, hash and size fields, then each file.
 - **A locked bridge.** The bridge answers only pages the app's own server delivered, using a per-launch nonce, and decodes every message strictly.

@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { AUTHOR, DOCS_REPO, GA_ID, REPO } from '../site.config.mjs';
+import { AUTHOR, CONTACT_EMAIL, DOCS_REPO, GA_ID, REPO } from '../site.config.mjs';
 
 const updated = '16 October 2026';
 const analytics = GA_ID !== '';
@@ -28,15 +28,23 @@ const analytics = GA_ID !== '';
 
       <h2>Who is responsible</h2>
       <p>
-        {AUTHOR} runs this website. Questions about this policy can be raised as an issue in the{' '}
-        <a class="link" href={`${DOCS_REPO}/issues`}>website repository</a>.
+        {AUTHOR} runs this website and is responsible for the data described here.{' '}
+        {CONTACT_EMAIL ? (
+          <Fragment>
+            For questions or requests about your data, write to <a class="link" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+          </Fragment>
+        ) : (
+          <Fragment>
+            Questions about this policy can be raised as an issue in the <a class="link" href={`${DOCS_REPO}/issues`}>website repository</a>.
+          </Fragment>
+        )}
       </p>
 
       <h2>What you send when you visit</h2>
       <p>
         Like any web server, the host that serves this site receives your IP address, the page you asked for, your browser's user agent and the
-        time of the request. The host uses this to deliver the page and to protect against abuse, and keeps it in short-lived server logs. This
-        site does not combine it with anything else.
+        time of the request. The host uses this to deliver the page and to protect against abuse, and keeps it in short-lived server logs. The legal basis
+        is the legitimate interest in delivering the site and keeping it secure. This site does not combine it with anything else.
       </p>
 
       {analytics ? (
@@ -44,9 +52,9 @@ const analytics = GA_ID !== '';
           <h2>Analytics</h2>
           <p>
             If you press <strong>Accept analytics</strong>, this site loads Google Analytics 4 (measurement ID <code>{GA_ID}</code>), operated by
-            Google. It sets the cookies <code>_ga</code> and <code>_ga_*</code> and sends Google the pages you view, your approximate location
-            (derived from your IP address, which is anonymised), your device and browser type, and how long you stay. It is used to see which pages
-            of the documentation are read and where people leave.
+            Google. It sets the cookies <code>_ga</code> and <code>_ga_*</code> and sends Google the pages you view, your approximate location,
+            your device and browser type, and how long you stay. Google Analytics 4 uses your IP address to estimate location and does not store
+            it. The data is kept for 2 months, then deleted. It is used to see which pages of the documentation are read and where people leave.
           </p>
           <ul>
             <li>Nothing from Google Analytics is loaded until you accept.</li>
@@ -72,16 +80,18 @@ const analytics = GA_ID !== '';
         </Fragment>
       )}
 
-      <h2>Fonts and other third parties</h2>
+      <h2>Fonts, settings and links</h2>
       <p>
-        Pages load the typefaces Google Sans and Reddit Mono from Google Fonts, so your browser contacts Google's font servers when a page loads.
-        This happens without cookies. Links to GitHub and other sites are ordinary links: they leave this site and follow those sites' policies.
+        Fonts are served from this website, so loading a page contacts no one else. The docs remember your light or dark theme in your browser's
+        local storage; that setting never leaves your device. Links to GitHub and other sites are ordinary links: they leave this site and
+        follow those sites' policies.
       </p>
 
       <h2>Your rights</h2>
       <p>
-        Depending on where you live, you may have the right to ask what data is held about you, to have it corrected or deleted, and to object to
-        processing. This site holds no account data. For data held by Google Analytics, use Google's own tools and your Google account controls.
+        Depending on where you live, you may have the right to ask what data is held about you, to have it corrected or deleted, to restrict or
+        object to processing, and to withdraw consent at any time. This site holds no account data. For data held by Google Analytics, use
+        Google's own tools and your Google account controls. You can also complain to the data protection authority where you live.
       </p>
 
       <h2>Changes</h2>

@@ -25,19 +25,11 @@ export default defineConfig({
       head: [
         { tag: 'link', attrs: { rel: 'icon', href: '/favicon.ico', sizes: '32x32' } },
         { tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' } },
-        { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
-        { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' } },
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Reddit+Mono:wght@400;500;600&display=swap',
-          },
-        },
+        { tag: 'link', attrs: { rel: 'stylesheet', href: '/fonts/fonts.css' } },
         { tag: 'script', attrs: { src: '/consent.js', defer: true, 'data-ga': GA_ID } },
       ],
       sidebar: [
-        { label: 'Getting started', items: ['docs/getting-started/quick-start', 'docs/getting-started/concepts'] },
+        { label: 'Getting started', items: ['docs/getting-started/quick-start', 'docs/getting-started/concepts', 'docs/getting-started/beta'] },
         {
           label: 'Guides',
           items: [

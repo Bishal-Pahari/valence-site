@@ -1,0 +1,14 @@
+# Response headers for Cloudflare Pages and Netlify (both read this file). Other hosts: set the same values in their config.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  # Turn on only once the custom domain serves HTTPS everywhere; browsers remember it for a year.
+  Strict-Transport-Security: max-age=31536000
+
+# Hashed build output and fonts never change under the same name.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
