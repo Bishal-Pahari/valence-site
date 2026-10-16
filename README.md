@@ -26,7 +26,7 @@ Two environment variables, set at build time (see `.env.example`):
 
 | Variable | Meaning |
 |---|---|
-| `SITE_URL` | The public origin, no trailing slash. Used for canonical URLs, the sitemap, `robots.txt` and share images. Until it is set, the build uses the placeholder `https://valence.example` and warns. |
+| `SITE_URL` | The public origin, no trailing slash. Used for canonical URLs, the sitemap, `robots.txt` and share images. Until a domain is bought it defaults to the free Cloudflare Pages address `https://getvalence.pages.dev`. |
 | `PUBLIC_GA_ID` | A GA4 measurement ID such as `G-XXXXXXXXXX`. Empty means no analytics code, no banner, and a privacy page that says so. |
 
 ## Before the first deploy

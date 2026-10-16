@@ -3,8 +3,9 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
+import { SITE_URL } from '../src/site.config.mjs';
+
 const DIST = process.env.DIST || 'dist';
-const SITE_URL = (process.env.SITE_URL || 'https://valence.example').replace(/\/$/, '');
 const errors = [];
 const warnings = [];
 const err = (page, msg) => errors.push(`${page}: ${msg}`);
@@ -131,7 +132,6 @@ else {
 }
 for (const f of ['llms.txt', 'llms-full.txt']) if (!existsSync(join(DIST, f))) err(f, 'missing');
 
-if (SITE_URL === 'https://valence.example') warnings.push('SITE_URL is the placeholder https://valence.example. Set SITE_URL before deploying so canonicals, the sitemap and share images use your domain.');
 
 for (const w of warnings) console.warn(`warning: ${w}`);
 if (errors.length) {
