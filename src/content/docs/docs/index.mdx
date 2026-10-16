@@ -1,0 +1,47 @@
+---
+title: Valence documentation
+description: Guides and reference for Valence, which ships a web app inside a Flutter shell with signed over-the-air UI updates and offline-first SQLite.
+template: splash
+hero:
+  tagline: Run your web app inside a Flutter shell, update its UI without store review, and keep it working offline.
+  actions:
+    - text: Quick start
+      link: /docs/getting-started/quick-start/
+      icon: right-arrow
+    - text: How it works
+      link: /docs/getting-started/concepts/
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Valence is an open-source architecture. A small Flutter host goes through store review and rarely changes. Everything the user sees is your web build, shipped as a signed bundle that each phone verifies, tries and rolls back on its own. Data lives in native SQLite and syncs by sequence number.
+
+## Start here
+
+<CardGrid>
+  <LinkCard title="Quick start" description="Run npm create valence@latest in your project and ship the first bundle." href="/docs/getting-started/quick-start/" />
+  <LinkCard title="How Valence works" description="The host, the bundle, the seed and the sync, and which one carries which kind of change." href="/docs/getting-started/concepts/" />
+</CardGrid>
+
+## Guides
+
+<CardGrid>
+  <LinkCard title="Web app" description="Call native features from your web code, and run the same build as a website." href="/docs/guides/web-app/" />
+  <LinkCard title="Typed bridge" description="Define methods once in a schema and generate the Dart and TypeScript sides." href="/docs/guides/bridge/" />
+  <LinkCard title="Flutter host" description="What the generated host does, and the platform setup it needs." href="/docs/guides/host/" />
+  <LinkCard title="Data and sync" description="The seed database, incremental pull, local-first writes and schema versions." href="/docs/guides/data-and-sync/" />
+  <LinkCard title="Releasing" description="Sign a bundle, upload it, ramp the rollout and roll back." href="/docs/guides/releasing/" />
+  <LinkCard title="Store policy" description="What Apple and Google allow, and which rules the tooling checks for you." href="/docs/guides/store-policy/" />
+</CardGrid>
+
+## Reference
+
+<CardGrid>
+  <LinkCard title="CLI" description="Every command and flag of the valence CLI and the create-valence wizard." href="/docs/reference/cli/" />
+  <LinkCard title="Configuration" description="valence.config.json, keyring.json, baseline.json and the project layout." href="/docs/reference/config/" />
+  <LinkCard title="Bundle format" description="The OTA host layout, the pointer, the signed manifest and the check order." href="/docs/reference/manifest/" />
+  <LinkCard title="Update protocol" description="The host update algorithm and the trial, commit and rollback state machine." href="/docs/reference/update-protocol/" />
+  <LinkCard title="Bridge protocol" description="Messages, replies, events, error codes and the nonce." href="/docs/reference/bridge-protocol/" />
+  <LinkCard title="Troubleshooting" description="Error messages from the CLI and the host, with the cause and the fix." href="/docs/reference/troubleshooting/" />
+</CardGrid>

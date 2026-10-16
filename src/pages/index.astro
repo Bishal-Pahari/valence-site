@@ -1,0 +1,49 @@
+---
+import '../styles/home.css';
+
+import home from '../content/home.html?raw';
+import Base from '../layouts/Base.astro';
+import { AUTHOR, DESCRIPTION, REPO, SITE_NAME, SITE_URL, VERSION } from '../site.config.mjs';
+
+// The FAQ section is the source for the FAQPage structured data, so the two can never disagree.
+const strip = (s: string) => s.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+const faq = [...home.matchAll(/<dt>([\s\S]*?)<\/dt><dd>([\s\S]*?)<\/dd>/g)].map(([, q, a]) => ({
+  '@type': 'Question',
+  name: strip(q),
+  acceptedAnswer: { '@type': 'Answer', text: strip(a) },
+}));
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: SITE_NAME,
+    description: DESCRIPTION,
+    url: SITE_URL,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Node.js 22.13 or later',
+    softwareVersion: VERSION,
+    license: 'https://opensource.org/licenses/MIT',
+    codeRepository: REPO,
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: { '@type': 'Person', name: AUTHOR },
+  },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq },
+];
+---
+
+<Base
+  title="Valence: over-the-air web UI updates for Flutter apps"
+  description="Run your web app inside a Flutter shell. Ship signed UI updates without store review, with offline-first SQLite and a typed bridge."
+  path="/"
+  ogKey="home"
+  ogAlt="Valence: update your app's UI without waiting for store review"
+  isHome
+  jsonLd={jsonLd}
+>
+  <Fragment set:html={home} />
+</Base>
+
+<script>
+  import '../scripts/home.js';
+</script>

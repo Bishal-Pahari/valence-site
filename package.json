@@ -1,0 +1,22 @@
+{
+  "name": "valence-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && node scripts/check-seo.mjs",
+    "preview": "astro preview",
+    "check": "node scripts/check-seo.mjs"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/starlight": "^0.42.6",
+    "astro": "^7.4.0",
+    "astro-og-canvas": "^0.13.2",
+    "sharp": "^0.35.5"
+  }
+}

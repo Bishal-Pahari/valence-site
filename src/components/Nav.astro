@@ -1,0 +1,25 @@
+---
+import { REPO } from '../site.config.mjs';
+
+interface Props { isHome?: boolean }
+const { isHome = false } = Astro.props;
+const base = isHome ? '' : '/';
+---
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand hov" href="/"><svg class="ico" data-a="redraw" aria-hidden="true"><use href="#i-mark"></use></svg>Valence</a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href={`${base}#inside`}>Inside the app</a>
+      <a href={`${base}#path`}>Release path</a>
+      <a href={`${base}#offline`}>Offline</a>
+      <a href={`${base}#bridge`}>Bridge</a>
+      <a href={`${base}#policy`}>Store policy</a>
+      <a href={`${base}#start`}>Get started</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ink" href="/docs/">Docs</a>
+      <a class="btn hov" href={REPO}>GitHub <svg class="ico" data-a="nudge" style="width:15px;height:15px" aria-hidden="true"><use href="#i-out"></use></svg></a>
+    </div>
+  </div>
+</header>

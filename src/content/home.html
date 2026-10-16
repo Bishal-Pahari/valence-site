@@ -1,0 +1,428 @@
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <div class="hero-tags">
+          <span class="tag accent">Open source, MIT</span>
+          <span class="tag">v0.3</span>
+          <span class="tag">Flutter host + any static web build</span>
+        </div>
+        <h1>Update your app’s UI without waiting for store review.</h1>
+        <p class="lede">Valence runs your web app inside a Flutter shell. UI changes reach phones as signed bundles that each phone verifies, tries, and rolls back on its own if the new version fails to start. Data lives in native SQLite, so the app works offline from the first launch.</p>
+        <div class="hero-actions">
+          <div class="cmd"><span class="prompt">$</span><code>npm create valence@latest</code><button class="copy" type="button" data-copy="npm create valence@latest" aria-label="Copy command"><svg class="ico" style="width:17px;height:17px" aria-hidden="true"><use href="#i-copy"/></svg></button></div>
+          <a class="link" href="/docs/">Read the docs</a>
+        </div>
+      </div>
+
+      <div class="sim-intro">
+        <span class="eyebrow">Try the release flow</span>
+        <p>A reference app running on a simulated phone. The console follows the update rules in the spec, with time sped up: release a bundle, restart the phone, ship a broken build and watch it revert.</p>
+      </div>
+
+      <div class="window" id="sim">
+        <div class="chrome">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="chrome-title">Reference app · app.valence.reference</span>
+          <span class="chrome-meta" id="pointerMeta">channels/production.json → seq 42</span>
+        </div>
+        <div class="sim-body">
+          <div class="sim-phone">
+            <div class="phone"><div class="screen">
+              <div class="statusbar"><span>10:24</span><svg class="ico" id="netIcon" role="img" aria-label="Online"><use href="#i-wifi"/></svg></div>
+              <div id="appView"></div>
+            </div></div>
+            <p class="phone-caption" id="caption" aria-live="polite"></p>
+          </div>
+
+          <div class="sim-side">
+            <div class="ctl-groups">
+              <div class="ctl">
+                <span class="ctl-title">On your laptop</span>
+                <div class="ctl-row">
+                  <button class="btn btn-ink" type="button" id="btnRelease">Release seq 43</button>
+                  <div class="seg" role="group" aria-label="Rollout percentage">
+                    <button type="button" data-r="10" aria-pressed="false">10%</button>
+                    <button type="button" data-r="50" aria-pressed="false">50%</button>
+                    <button type="button" data-r="100" aria-pressed="true">100%</button>
+                  </div>
+                </div>
+                <label class="check" for="crash"><input type="checkbox" id="crash"> Next build crashes on start</label>
+              </div>
+              <div class="ctl">
+                <span class="ctl-title">On a user’s phone</span>
+                <div class="ctl-row">
+                  <button class="btn" type="button" id="btnRestart">Restart app</button>
+                  <button class="btn switch" type="button" id="btnAir" aria-pressed="false"><span class="knob" aria-hidden="true"></span>Airplane mode</button>
+                </div>
+                <span class="muted" style="font-size:14px">The sync button inside the app calls <code>sync.now</code> over the bridge.</span>
+              </div>
+            </div>
+
+            <p class="hint" aria-live="polite"><b>Next</b><span id="hint"></span></p>
+
+            <div class="panes">
+              <div class="pane">
+                <div class="pane-head"><span>valence/state.json</span></div>
+                <div>
+                  <pre id="stateView" aria-label="Device update state"></pre>
+                  <div class="sqlite" id="sqliteView"></div>
+                </div>
+              </div>
+              <div class="pane">
+                <div class="pane-head"><span>log</span><button type="button" id="btnReset">Reset</button></div>
+                <ol id="log" aria-label="Event log"></ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inside">
+    <div class="wrap">
+      <div class="sec-row">
+        <div class="sec-head reveal">
+          <span class="eyebrow">Inside the app</span>
+          <h2>A small native host. Everything users see is your web build.</h2>
+          <p class="lede">The Flutter host goes through store review and rarely changes. It serves your web build from the phone itself, keeps data in SQLite, and checks for new signed bundles in the background.</p>
+        <p><a class="link" href="/docs/guides/host/">How the Flutter host works</a></p>
+        </div>
+        <figure class="mascot reveal" style="--i:1"><img src="assets/mascot-swap.webp" width="674" height="307" loading="lazy" alt="The Valence hermit crab stepping out of an old phone-shaped shell into a new one"><figcaption>The host stays. The shell gets swapped.</figcaption></figure>
+      </div>
+      <div class="arch reveal">
+        <div class="host">
+          <div class="host-label"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Flutter host <span>store-reviewed, rarely changes</span></div>
+          <div class="layer wide hov"><svg class="ico" data-a="redraw" aria-hidden="true"><use href="#i-window"/></svg><div><b>WebView</b><span>Your web build, served by the app’s own server on 127.0.0.1</span></div></div>
+          <div class="strip hov"><svg class="ico" data-a="redraw" aria-hidden="true"><use href="#i-brace"/></svg>Typed bridge <span>per-launch nonce · strict decoding</span></div>
+          <div class="layer hov"><svg class="ico" data-a="bob" aria-hidden="true"><use href="#i-db"/></svg><div><b>SQLite</b><span>kv, bucket, outbox and prefs, starting from seed.db</span></div></div>
+          <div class="layer hov"><svg class="ico" data-a="redraw" aria-hidden="true"><use href="#i-seal"/></svg><div><b>Updater</b><span>pointer → signed manifest → changed files</span></div></div>
+        </div>
+        <div class="wire" aria-hidden="true"><span>pull by usn, push outbox</span></div>
+        <div class="wire" aria-hidden="true"><span>signed bundles</span></div>
+        <div class="ext"><b>Your sync API</b><span>or static chunks on a CDN</span></div>
+        <div class="ext"><b>Static OTA host</b><span>R2, S3 or any CDN</span></div>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <caption class="muted" style="caption-side:top;text-align:left;padding:16px 22px 0;font-size:15px">Only new native features wait for a store release.</caption>
+          <thead><tr><th scope="col">What changed</th><th scope="col">How it reaches users</th><th scope="col">Store review</th></tr></thead>
+          <tbody>
+            <tr><td>UI, copy, styles, web logic</td><td>A signed over-the-air bundle with a staged rollout: 10%, then 50%, then 100%</td><td><span class="tag ok">Not needed</span></td></tr>
+            <tr><td>Data, or a fix to bundled data</td><td>Sync. The fix is a new row with a higher sequence number.</td><td><span class="tag ok">Not needed</span></td></tr>
+            <tr><td>A new native capability or feature area</td><td>A normal app release</td><td><span class="tag">Required</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="path">
+    <div class="wrap">
+      <div class="sec-row">
+        <div class="sec-head reveal">
+          <span class="eyebrow">Release path</span>
+          <h2>Signed on your laptop, verified on every phone.</h2>
+          <p class="lede">A release is a set of content-addressed files, a manifest signed with Ed25519, and a small pointer that says which manifest is live. Phones download only the files whose hash changed.</p>
+        <p><a class="link" href="/docs/guides/releasing/">Read the release guide</a></p>
+        </div>
+        <figure class="mascot reveal" style="--i:1"><img src="assets/mascot-letter.webp" width="371" height="389" loading="lazy" alt="The Valence hermit crab holding an envelope closed with a wax seal"><figcaption>Every bundle arrives signed.</figcaption></figure>
+      </div>
+      <div class="path">
+        <ol class="steps reveal">
+          <li><span class="num">01</span><div><h3>Build and sign</h3><p><code>valence bundle</code> hashes every file, writes the manifest with the page’s CSP, and signs it. It refuses any native code.</p></div></li>
+          <li><span class="num">02</span><div><h3>Upload, pointer last</h3><p>Files go up first, then the manifest and its <code>.sig</code>, then the pointer. A phone never sees a manifest whose files are missing.</p></div></li>
+          <li><span class="num">03</span><div><h3>Verify in a fixed order</h3><p>Signature, then <code>appId</code>, then <code>seq</code> against the pointer, then the floor, then <code>requires</code>, then every path, hash and size. Any failure stops the update.</p></div></li>
+          <li><span class="num">04</span><div><h3>Try it on the next launch</h3><p>The new bundle runs as a trial. Your web app calls <code>ready()</code> after its first paint, and that call commits the update.</p></div></li>
+          <li><span class="num">05</span><div><h3>Commit, or go back</h3><p>No <code>ready()</code> within 15 seconds of foreground time means the phone returns to the last good version. A second failure marks the bundle bad. The bundle built into the app is the final fallback.</p></div></li>
+        </ol>
+        <div class="reveal">
+          <div class="window">
+            <div class="chrome"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="chrome-title">manifests/43.json</span><span class="chrome-meta">signed · keyId k1</span></div>
+            <pre class="code" data-json>{
+  "format": 1,
+  "appId": "app.valence.reference",
+  "seq": 43,
+  "version": "2026.10.16+43",
+  "floor": 40,
+  "requires": { "bridge": 1, "data": { "schedule": 2 } },
+  "entry": "index.html",
+  "csp": "default-src 'self'; script-src 'self' 'sha256-…'; frame-src 'none'",
+  "urgent": false,
+  "routes": ["/", "/schedule", "/settings"],
+  "files": {
+    "index.html": { "h": "9f2c41…e41a", "n": 1834 },
+    "_app/immutable/entry/start.js": { "h": "03bd7e…a9c0", "n": 48210 }
+  },
+  "keyId": "k1"
+}</pre>
+            <div class="notes">
+              <div><code>seq</code> only goes up. It is the bundle’s identity; <code>version</code> is for display.</div>
+              <div><code>floor</code> is the lowest seq a phone may run after this one. Raise it after a security fix.</div>
+              <div><code>csp</code> is computed at build time and sent as the entry page’s header.</div>
+              <div><code>routes</code> are compared with the last store-reviewed build to catch purpose drift.</div>
+            </div>
+          </div>
+          <div class="callout">
+            <img src="assets/mascot-hide.webp" width="301" height="341" loading="lazy" alt="The Valence hermit crab tucked back inside its old shell">
+            <p><b>Rolling back means rolling forward.</b> Release the last good commit again. It gets a new, higher seq, so every phone moves forward to it. Phones still trying the bad bundle revert on their own.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="offline">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Offline first</span>
+        <h2>The first launch works with no network at all.</h2>
+        <p class="lede">The app ships with <code>seed.db</code>, so every screen has data before the phone has ever been online. After that, the phone asks for everything after the last row it has.</p>
+        <p><a class="link" href="/docs/guides/data-and-sync/">Read the data and sync guide</a></p>
+      </div>
+      <div class="split">
+        <div class="reveal">
+          <div class="ledger">
+            <div class="ledger-bar">
+              <div class="seed"><svg class="ico" aria-hidden="true"><use href="#i-db"/></svg>usn 1 – 1240 · shipped in the app</div>
+              <div class="new">1241 – 1242 · sync</div>
+            </div>
+            <div class="ledger-req">GET /schedule?since=1240&amp;schema=2&amp;limit=500 <span>→ 200 · 2 rows · max 1242 · more: false</span></div>
+            <ol class="rows">
+              <li><span class="u">usn 1239</span><span class="kk">schedule/day-2</span><span class="v">Day 2 sessions</span><span class="tag">seed</span></li>
+              <li><span class="u">usn 1240</span><span class="kk">schedule/day-1</span><span class="v">Day 1, offline talk in Hall B</span><span class="tag">seed</span></li>
+              <li><span class="u">usn 1241</span><span class="kk">schedule/day-2</span><span class="v">Day 2, adds a workshop at 14:00</span><span class="tag accent">new</span></li>
+              <li><span class="u">usn 1242</span><span class="kk">schedule/day-1</span><span class="v">Day 1, offline talk moved to Hall C, lightning talks at 16:30</span><span class="tag accent">fix</span></li>
+            </ol>
+          </div>
+          <div class="window sql">
+            <div class="chrome"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="chrome-title">sqlite · the whole data layer</span></div>
+<pre class="code"><span class="kw">CREATE TABLE</span> kv     (bucket, schema, key, value, usn, deleted)  <span class="c">-- JSON values</span>
+<span class="kw">CREATE TABLE</span> bucket (name, schema, max_usn, synced_at)       <span class="c">-- where each pull resumes</span>
+<span class="kw">CREATE TABLE</span> outbox (id, bucket, key, value, deleted, created_at)
+<span class="kw">CREATE TABLE</span> prefs  (key, value)
+<span class="kw">PRAGMA</span> journal_mode = WAL;</pre>
+          </div>
+        </div>
+        <ul class="facts reveal">
+          <li><b>Pull by sequence number.</b> Rows arrive in order and each page is applied in one transaction, so a dropped connection never leaves half a page.</li>
+          <li><b>Corrections are just newer rows.</b> A wrong room in the seed is fixed by a row with a higher <code>usn</code>. There is no separate patch system.</li>
+          <li><b>Local writes win until acknowledged.</b> <code>data.put</code> writes the row and an outbox entry together. Push is idempotent by op id, and the server keeps the last write per key.</li>
+          <li><b>The UI and its data move together.</b> Read-only data is stored per schema version, so a trial that reverts still has the data its old UI expects.</li>
+          <li><b>No backend needed for public data.</b> Publish static chunks on a CDN and phones fetch only the chunks above what they already have.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="bridge">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Typed bridge</span>
+        <h2>One schema, so Dart and TypeScript can’t drift apart.</h2>
+        <p class="lede">You describe the bridge once in <code>bridge.schema.json</code>. Codegen writes the Dart handler interface for the host and the TypeScript types for your web app. CI runs <code>codegen --check</code> and fails when they are stale.</p>
+        <p><a class="link" href="/docs/guides/bridge/">Read the bridge guide</a></p>
+      </div>
+      <div class="window reveal">
+        <div class="tabs" role="tablist" aria-label="Bridge files">
+          <button role="tab" id="t-schema" aria-controls="p-schema" aria-selected="true">bridge.schema.json</button>
+          <button role="tab" id="t-dart" aria-controls="p-dart" aria-selected="false" tabindex="-1">bridge.g.dart · generated</button>
+          <button role="tab" id="t-web" aria-controls="p-web" aria-selected="false" tabindex="-1">+page.svelte · yours</button>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="p-schema" aria-labelledby="t-schema">
+<pre class="code" data-json>{
+  "version": 1,
+  "methods": {
+    "app.ready": { "since": 1, "params": {}, "returns": "void" },
+    "data.get":  { "since": 1, "params": { "bucket": "string", "key": "string" }, "returns": "json?" },
+    "data.list": { "since": 1, "params": { "bucket": "string", "prefix": "string?", "limit": "int?" }, "returns": "Row[]" },
+    "data.put":  { "since": 1, "params": { "bucket": "string", "key": "string", "value": "json?" }, "returns": "void" },
+    "sync.now":  { "since": 1, "params": { "buckets": "string[]?" }, "returns": "SyncResult" }
+  },
+  "events": {
+    "sync.changed":       { "since": 1, "payload": { "buckets": "string[]" } },
+    "bundle.updateReady": { "since": 1, "payload": { "seq": "int" } }
+  },
+  "types": {
+    "Row":        { "key": "string", "value": "json", "usn": "int" },
+    "SyncResult": { "buckets": "string[]", "changed": "int", "offline": "bool" }
+  }
+}</pre>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="p-dart" aria-labelledby="t-dart" hidden>
+<pre class="code"><span class="c">// GENERATED by valence codegen from valence/bridge.schema.json. Do not edit.</span>
+<span class="kw">const</span> hostBridgeVersion = <span class="n">1</span>;
+
+<span class="kw">abstract interface class</span> <span class="k">BridgeHandlers</span> {
+  Future&lt;<span class="kw">void</span>&gt; appReady();
+  Future&lt;Object?&gt; dataGet(DataGetParams p);
+  Future&lt;List&lt;Row&gt;&gt; dataList(DataListParams p);
+  Future&lt;<span class="kw">void</span>&gt; dataPut(DataPutParams p);
+  Future&lt;SyncResult&gt; syncNow(SyncNowParams p);
+}
+
+<span class="c">/// Decodes one message from the JS channel, checks the per-launch nonce,</span>
+<span class="c">/// calls the handler and returns the reply JSON. Never throws.</span>
+Future&lt;String&gt; bridgeDispatch(BridgeHandlers h, String raw, {<span class="kw">required</span> String nonce})</pre>
+        </div>
+        <div class="tabpanel" role="tabpanel" id="p-web" aria-labelledby="t-web" hidden>
+<pre class="code">&lt;<span class="kw">script</span> lang=<span class="s">"ts"</span>&gt;
+  <span class="kw">import</span> { onMount } <span class="kw">from</span> <span class="s">'svelte'</span>;
+
+  <span class="kw">import</span> { on, call, ready } <span class="kw">from</span> <span class="s">'$lib/valence/client'</span>;
+
+  <span class="kw">let</span> day = $state&lt;unknown&gt;(<span class="kw">null</span>);
+  <span class="kw">const</span> load = <span class="kw">async</span> () =&gt; (day = <span class="kw">await</span> call(<span class="s">'data.get'</span>, { bucket: <span class="s">'schedule'</span>, key: <span class="s">'day-1'</span> }));
+
+  onMount(<span class="kw">async</span> () =&gt; {
+    <span class="kw">await</span> load();
+    <span class="kw">await</span> ready(); <span class="c">// first paint is done: this commits a trial bundle</span>
+    <span class="kw">return</span> on(<span class="s">'sync.changed'</span>, ({ buckets }) =&gt; buckets.includes(<span class="s">'schedule'</span>) &amp;&amp; load());
+  });
+
+  <span class="c">// call('data.get') with no params does not compile. In a plain browser,</span>
+  <span class="c">// calls go to your web shim, so the same build is also your website.</span>
+&lt;/<span class="kw">script</span>&gt;</pre>
+        </div>
+      </div>
+      <div class="list">
+        <div class="hov reveal" style="--i:0">
+          <span class="ico-box"><svg class="ico" data-a="shake" aria-hidden="true"><use href="#i-lock"/></svg></span>
+          <h3>Only your own pages can call it</h3>
+          <p>The app’s loopback server writes a per-launch nonce into the entry page. Messages without it are refused, so a page served by anything else gets no bridge.</p>
+        </div>
+        <div class="hov reveal" style="--i:1">
+          <span class="ico-box"><svg class="ico" data-a="redraw" aria-hidden="true"><use href="#i-brace"/></svg></span>
+          <h3>Strict decoding on the host</h3>
+          <p>Unknown fields, wrong types and non-JSON input are rejected before a handler runs. Replies are built with <code>jsonEncode</code>, never by joining strings into a script.</p>
+        </div>
+        <div class="hov reveal" style="--i:2">
+          <span class="ico-box"><svg class="ico" data-a="redraw" aria-hidden="true"><use href="#i-window"/></svg></span>
+          <h3>A locked frame</h3>
+          <p>The WebView stays on <code>127.0.0.1</code>, other URLs open in the browser, and there are no off-origin subframes. The page’s CSP comes from the signed manifest.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="policy">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Store policy</span>
+        <h2>Allowed by both stores, within limits the tooling checks.</h2>
+        <p class="lede">Downloading JavaScript that runs in a WebView is permitted on iOS and Android. Valence checks the conditions on every release, so you find out before a reviewer does.</p>
+      </div>
+      <div class="quotes">
+        <figure class="quote reveal" style="--i:0;margin:0">
+          <figcaption class="cite">Apple Developer Program License Agreement §3.3.1(B)</figcaption>
+          <blockquote>“Interpreted code may be downloaded to an Application but only so long as such code: (a) does not change the primary purpose of the Application … (b) does not bypass signing, sandbox, or other security features of the OS; and (c) … does not create a store or storefront for other Applications.”</blockquote>
+        </figure>
+        <figure class="quote reveal" style="--i:1;margin:0">
+          <figcaption class="cite">Google Play, Device and Network Abuse policy</figcaption>
+          <blockquote>“This restriction does not apply to code that runs in a virtual machine or an interpreter where either provides indirect access to Android APIs (such as JavaScript in a webview or browser).”</blockquote>
+        </figure>
+      </div>
+      <div class="rules">
+        <div class="rule hov reveal" style="--i:0">
+          <span class="ico-box"><svg class="ico" data-a="shake" aria-hidden="true"><use href="#i-chip"/></svg></span>
+          <div><h3>Native code can never be downloaded</h3><p>The bundler rejects these anywhere in a path:</p>
+          <div class="exts"><code>.so</code><code>.dex</code><code>.jar</code><code>.apk</code><code>.aab</code><code>.ipa</code><code>.dylib</code><code>.framework</code><code>.a</code><code>.o</code><code>.class</code><code>.exe</code><code>.dll</code></div></div>
+        </div>
+        <div class="rule hov reveal" style="--i:1">
+          <span class="ico-box"><svg class="ico" data-a="redraw" aria-hidden="true"><use href="#i-route"/></svg></span>
+          <div><h3>Purpose drift is flagged</h3><p>Each release’s top-level routes are compared with the bundle you last submitted to the store. A new route raises a warning, because a new feature area should go out with a store update.</p></div>
+        </div>
+        <div class="rule hov reveal" style="--i:2">
+          <span class="ico-box"><svg class="ico" data-a="buzz" aria-hidden="true"><use href="#i-phone"/></svg></span>
+          <div><h3>Real native value</h3><p>To avoid the “repackaged website” rejection, the host ships at least two of: offline cold start, notifications, a home-screen widget, share and haptics, biometric lock.</p></div>
+        </div>
+        <div class="rule hov reveal" style="--i:3">
+          <span class="ico-box"><svg class="ico" data-a="bob" aria-hidden="true"><use href="#i-db"/></svg></span>
+          <div><h3>First launch never waits</h3><p>The built-in bundle and the seed make the app fully usable offline, so a first launch never blocks on a download.</p></div>
+        </div>
+        <div class="rule hov reveal" style="--i:4">
+          <span class="ico-box"><svg class="ico" data-a="shake" aria-hidden="true"><use href="#i-lock"/></svg></span>
+          <div><h3>No untrusted pages</h3><p>Play flags a JavaScript interface that loads untrusted content. The bridge only answers pages from the app’s own local server.</p></div>
+        </div>
+        <div class="rule hov reveal" style="--i:5">
+          <span class="ico-box"><svg class="ico" data-a="redraw" aria-hidden="true"><use href="#i-seal"/></svg></span>
+          <div><h3>A CDN can’t push code</h3><p>Every manifest is signed and every file is checked against its hash. Someone who controls the CDN can freeze phones on their current bundle, but can’t serve new code.</p></div>
+        </div>
+      </div>
+      <p class="muted reveal" style="font-size:14.5px;margin-top:20px">Policy text retrieved 2026-10-14. The exact quotes and the rules built on them are in the <a class="link" href="/docs/guides/store-policy/">store policy guide</a>.</p>
+    </div>
+  </section>
+
+  <section id="start">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Get started</span>
+        <h2>One command from your project root.</h2>
+        <p class="lede">The wizard does everything that doesn’t need AI in a few seconds. It is safe to run again: it never overwrites your config, your schema or files you’ve edited.</p>
+        <p><a class="link" href="/docs/getting-started/quick-start/">Follow the quick start</a></p>
+      </div>
+      <div class="start">
+        <div class="window term reveal" style="--i:0">
+          <div class="chrome"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="chrome-title">~/my-app</span></div>
+<pre><span class="p">$ </span>npm create valence@latest
+<span class="c"># then, in Claude Code</span>
+<span class="p">$ </span>claude "/valence init"
+
+<span class="c"># later</span>
+<span class="p">$ </span>npx create-valence@latest update    <span class="c"># CLI, skill and agents</span>
+<span class="p">$ </span>npx create-valence doctor           <span class="c"># quick health check</span>
+
+<span class="c"># no Claude Code? the CLI is vendored into your repo</span>
+<span class="p">$ </span>node valence/valence.mjs bundle
+<span class="p">$ </span>node valence/valence.mjs codegen --check</pre>
+        </div>
+        <div class="panel reveal" style="--i:1">
+          <ol class="wizard">
+            <li><span class="n">01</span><span><b>Detects</b> your web app (SvelteKit, Next.js static export, Astro or Vite), its package manager, an existing Flutter project and your app id.</span></li>
+            <li><span class="n">02</span><span><b>Writes</b> <code>valence.config.json</code>, the bridge schema and the web bridge client.</span></li>
+            <li><span class="n">03</span><span><b>Generates</b> your Ed25519 signing key outside the repo, and the typed bridge code.</span></li>
+            <li><span class="n">04</span><span><b>Installs</b> the <code>/valence</code> skill and its agents into <code>.claude/</code>.</span></li>
+            <li><span class="n">05</span><span><b>Offers to launch</b> <code>/valence init</code>, which builds the Flutter host, wires your web app, runs the tests and gets an independent review.</span></li>
+          </ol>
+          <div class="skill">
+            <div><code>/valence init</code><span>Scaffold the host, keys, bridge, offline store and tests.</span></div>
+            <div><code>/valence release</code><span>Build, sign and stage a bundle. Uploads only after you confirm.</span></div>
+            <div><code>/valence doctor</code><span>Check versions, store policy, signatures and tests.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Questions</span>
+        <h2>Before you ship it.</h2>
+      </div>
+      <dl style="margin:0">
+        <div class="qa reveal"><dt>Will Apple or Google reject an app built this way?</dt><dd>Both stores allow JavaScript running in a WebView to be downloaded, as long as it doesn’t change the app’s advertised purpose, bypass OS security or create a storefront. The common rejections are covered: the host must add real native value, new top-level routes are flagged for a store release, and the bridge is locked to the app’s own pages.</dd></div>
+        <div class="qa reveal"><dt>What happens to users when a release is broken?</dt><dd>Each phone tries a new bundle as a trial on the next launch. If the page doesn’t call <code>ready()</code> within 15 seconds of foreground time, or the app dies first, the phone goes back to the last good version. After a second failure the bundle is marked bad on that phone. Start with a 10% rollout and most users never see it.</dd></div>
+        <div class="qa reveal"><dt>Can a compromised CDN push code to my users?</dt><dd>No. Every manifest is signed, and every file is checked against its hash and size. The pointer is unsigned so you can change the rollout without re-signing; someone who controls it can freeze phones on their current bundle or change who is in the rollout, and nothing more.</dd></div>
+        <div class="qa reveal"><dt>Which web frameworks work?</dt><dd>Any SPA that builds to static files. The wizard detects SvelteKit, Next.js static export, Astro and Vite. When <code>window.Valence</code> is absent, bridge calls go to a web shim, so the same build is also your website.</dd></div>
+        <div class="qa reveal"><dt>Do I need Claude Code?</dt><dd>No. The CLI is zero-dependency Node and the wizard vendors it into your repo, so CI needs no install. Claude Code adds the <code>/valence</code> workflows that generate the Flutter host against the spec and review it.</dd></div>
+        <div class="qa reveal"><dt>What is out of scope?</dt><dd>Third-party mini-app stores (Apple guideline 4.7), CRDTs and real-time collaboration, and downloading native code.</dd></div>
+        <div class="qa reveal"><dt>How mature is it?</dt><dd>Version 0.3, skill-first. The CLI, the spec, codegen and the TypeScript client are tested. The Flutter runtime is generated per app against the spec and its test matrix. Once a reference app has proven it, the runtime moves into a <code>valence</code> pub package and an <code>@valence/bridge</code> npm package.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <div class="sec-row" style="align-items:center;margin-bottom:0">
+        <div class="hero-copy reveal">
+          <h2>Ship the fix today. Users get it on their next launch.</h2>
+          <div class="hero-actions">
+            <div class="cmd"><span class="prompt">$</span><code>npm create valence@latest</code><button class="copy" type="button" data-copy="npm create valence@latest" aria-label="Copy command"><svg class="ico" style="width:17px;height:17px" aria-hidden="true"><use href="#i-copy"/></svg></button></div>
+            <a class="btn hov" href="https://github.com/Bishal-Pahari/valence">View on GitHub <svg class="ico" data-a="nudge" style="width:15px;height:15px" aria-hidden="true"><use href="#i-out"/></svg></a>
+          </div>
+        </div>
+        <figure class="mascot reveal" style="--i:1"><img src="assets/mascot-wave.webp" width="377" height="384" loading="lazy" alt="The Valence hermit crab waving"></figure>
+      </div>
+    </div>
+  </section>

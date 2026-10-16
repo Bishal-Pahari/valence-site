@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Page not found | Valence"
+  description="This page does not exist. Go back to the Valence home page or browse the developer docs."
+  path="/404/"
+  ogKey="not-found"
+  ogAlt="Valence: page not found"
+  noindex
+>
+  <section class="notfound">
+    <div class="wrap notfound-grid">
+      <div>
+        <span class="eyebrow">404</span>
+        <h1>This page is not here.</h1>
+        <p class="lede">The link may be old, or the address may have a typo. These pages exist:</p>
+        <ul class="notfound-links">
+          <li><a class="link" href="/">Home</a></li>
+          <li><a class="link" href="/docs/">Documentation</a></li>
+          <li><a class="link" href="/docs/getting-started/quick-start/">Quick start</a></li>
+          <li><a class="link" href="/docs/reference/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </div>
+      <img src="/assets/mascot-hide.webp" width="301" height="341" alt="The Valence hermit crab tucked back inside its old shell, as if it took a wrong turn" />
+    </div>
+  </section>
+</Base>
+
+<style is:global>
+  .notfound { padding-block: clamp(72px, 10vw, 140px); }
+  .notfound-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 40px; align-items: center; }
+  .notfound h1 { margin: 14px 0 18px; }
+  .notfound-links { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 8px; }
+  .notfound img { height: 220px; width: auto; }
+  @media (max-width: 720px) { .notfound-grid { grid-template-columns: minmax(0, 1fr); } .notfound img { height: 150px; } }
+</style>

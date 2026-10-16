@@ -1,0 +1,43 @@
+/* Starlight theme: same fonts and blue accent as the home page. */
+:root {
+  --sl-font: 'Google Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --sl-font-mono: 'Reddit Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+  --sl-text-body: 1.0625rem;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #eaf1fa;
+  --sl-color-accent: #2f6bb0;
+  --sl-color-accent-high: #1e4f86;
+  --sl-color-white: #101215;
+  --sl-color-gray-1: #2a2d31;
+  --sl-color-gray-2: #3d4147;
+  --sl-color-gray-3: #676b72;
+  --sl-color-gray-4: #9a9da3;
+  --sl-color-gray-5: #e4e5e8;
+  --sl-color-gray-6: #f3f4f5;
+  --sl-color-gray-7: #fafafb;
+  --sl-color-black: #ffffff;
+}
+
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #1c2a3b;
+  --sl-color-accent: #5f95d6;
+  --sl-color-accent-high: #b7d0f2;
+  --sl-color-white: #f2f3f5;
+  --sl-color-gray-1: #d5d7da;
+  --sl-color-gray-2: #b8bbc0;
+  --sl-color-gray-3: #9a9da3;
+  --sl-color-gray-4: #5b5f66;
+  --sl-color-gray-5: #2d2f33;
+  --sl-color-gray-6: #222327;
+  --sl-color-gray-7: #1c1d20;
+  --sl-color-black: #151618;
+}
+
+.sl-markdown-content code:not(pre code) { font-size: 0.88em; }
+.sl-markdown-content h1, .sl-markdown-content h2, .sl-markdown-content h3 { letter-spacing: -0.015em; }
+
+/* Starlight's "note" aside uses the blue scale; point it at the site accent. */
+:root[data-theme='light'] { --sl-color-blue-low: #eaf1fa; --sl-color-blue: #2f6bb0; --sl-color-blue-high: #1e4f86; }
+:root[data-theme='dark'] { --sl-color-blue-low: #1c2a3b; --sl-color-blue: #5f95d6; --sl-color-blue-high: #b7d0f2; }
