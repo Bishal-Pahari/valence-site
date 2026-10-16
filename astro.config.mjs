@@ -12,7 +12,7 @@ export default defineConfig({
     starlight({
       title: 'Valence',
       description: DESCRIPTION,
-      logo: { light: './src/assets/logo.svg', dark: './src/assets/logo-dark.svg', alt: 'Valence' },
+      logo: { src: './src/assets/logo.svg', alt: 'Valence' },
       favicon: '/favicon.svg',
       social: [{ icon: 'github', label: 'GitHub', href: REPO }],
       editLink: { baseUrl: `${DOCS_REPO}/edit/main/` },
@@ -23,6 +23,8 @@ export default defineConfig({
       routeMiddleware: './src/route-middleware.ts',
       components: { Footer: './src/components/DocsFooter.astro' },
       head: [
+        { tag: 'link', attrs: { rel: 'icon', href: '/favicon.ico', sizes: '32x32' } },
+        { tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' } },
         { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
         { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' } },
         {

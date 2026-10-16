@@ -1,8 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="139 172 380 380">
-  <mask id="m"><rect x="139" y="172" width="380" height="380" fill="#fff"/><circle cx="336.5" cy="486.5" r="49" fill="#000"/></mask>
-  <g fill="none" stroke="#2F6BB0" stroke-width="53" stroke-linecap="round" mask="url(#m)">
-    <path d="M175 226C240 262 295 360 321 486"/>
-    <path d="M479 223L342 486"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="177 185 900 900">
+  <defs>
+    <path id="shell" d="M400 235H855C905 235 935 280 942 340L972 900C978 990 940 1035 870 1035H385C315 1035 277 990 283 900L313 340C320 280 350 235 400 235Z"/>
+    <clipPath id="inside"><use href="#shell"/></clipPath>
+  </defs>
+  <use href="#shell" fill="#2F6BB0"/>
+  <g clip-path="url(#inside)" stroke-linecap="round">
+    <path d="M512 770L527 860M742 770L727 860" stroke="#101215" stroke-width="92"/>
+    <ellipse cx="627" cy="1050" rx="305" ry="210" fill="#EBD7BA" stroke="#101215" stroke-width="24"/>
+    <path d="M512 770L527 862M742 770L727 862" stroke="#EBD7BA" stroke-width="46"/>
   </g>
-  <circle cx="336.5" cy="486.5" r="41.5" fill="#2F6BB0"/>
+  <circle cx="493" cy="690" r="92" fill="#101215"/>
+  <circle cx="757" cy="682" r="92" fill="#101215"/>
+  <circle cx="502" cy="684" r="27" fill="#fff"/>
+  <circle cx="766" cy="676" r="27" fill="#fff"/>
+  <use href="#shell" fill="none" stroke="#101215" stroke-width="46" stroke-linejoin="round"/>
+  <path d="M518 250V282Q518 305 543 305H712Q737 305 737 282V250Z" fill="#101215"/>
 </svg>

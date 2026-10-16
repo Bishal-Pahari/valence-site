@@ -130,7 +130,6 @@ p code, li code, dd code, td code, span code {
   border-bottom: 1px solid var(--line); }
 .nav .wrap { display: flex; align-items: center; gap: 28px; height: 62px; }
 .brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: var(--heading); font: 600 1.2rem/1 var(--sans); letter-spacing: -0.02em; }
-.brand .ico { color: var(--accent); width: 26px; height: 26px; }
 .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 14.5px; }
 .nav-links a { text-decoration: none; color: var(--muted); padding: 6px 0; border-bottom: 2px solid transparent; transition: color 180ms, border-color 180ms; }
 .nav-links a:hover { color: var(--heading); }
@@ -168,3 +167,6 @@ footer a:hover { color: var(--heading); }
   .reveal[data-pre] { opacity: 1; transform: none; }
   .ico[data-pre] { opacity: 1; stroke-dashoffset: 0; }
 }
+
+.brand img { width: 30px; height: 30px; flex: none; }
+.brand:hover img { animation: bob 900ms ease-in-out; }
