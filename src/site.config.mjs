@@ -11,4 +11,4 @@ export const REPO = 'https://github.com/Bishal-Pahari/valence';
 export const DOCS_REPO = 'https://github.com/Bishal-Pahari/valence-site';
 export const VERSION = '0.3.0';
 export const DESCRIPTION =
-  'Ship your web app inside a Flutter shell. Signed over-the-air UI updates without store review, offline-first native SQLite, and a typed bridge.';
+  'Keep the native core, swap the web shell. Your web app becomes your mobile app’s interface: a small Flutter core that ships once, signed UI releases that roll back on their own, and offline-first native SQLite.';

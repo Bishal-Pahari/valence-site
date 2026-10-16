@@ -10,8 +10,8 @@ export const OG_LOGO = join(process.cwd(), 'src', 'assets', 'logo-og.png');
 /** Marketing pages that need a share image. Docs pages come from the content collection. */
 export const MARKETING_OG = {
   home: {
-    title: 'Update your app’s UI without waiting for store review',
-    description: 'Signed over-the-air web bundles in a Flutter shell, with offline-first SQLite and a typed bridge.',
+    title: 'Keep the core.\nSwap the shell.',
+    description: 'Your web app becomes your mobile app’s interface: a small Flutter core that ships once, signed UI releases that roll back on their own, and offline-first SQLite.',
   },
   privacy: {
     title: 'Privacy policy',
